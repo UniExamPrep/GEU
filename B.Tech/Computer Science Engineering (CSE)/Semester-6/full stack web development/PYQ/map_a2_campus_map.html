@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 2 – Interactive Campus Map</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 28px 20px;
+        }
+        h1 { color: #2e7d32; margin-bottom: 4px; font-size: 24px; }
+        p.sub { color: #666; font-size: 14px; margin-bottom: 20px; }
+
+        .map-wrapper {
+            position: relative;
+            display: inline-block;
+            border: 3px solid #43a047;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 30px rgba(46,125,50,0.2);
+        }
+        .map-wrapper img { display: block; cursor: pointer; }
+
+        #tooltip {
+            position: fixed;
+            background: #1b5e20;
+            color: #e8f5e9;
+            border: 1px solid #66bb6a;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            pointer-events: none;
+            display: none;
+            z-index: 999;
+        }
+
+        /* Info panel below map */
+        .info-bar {
+            margin-top: 18px;
+            background: white;
+            border-radius: 10px;
+            border-left: 5px solid #43a047;
+            padding: 14px 20px;
+            width: 760px;
+            max-width: 100%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            font-size: 14px;
+            color: #333;
+        }
+        .info-bar b { color: #2e7d32; }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+            justify-content: center;
+        }
+        .legend-item {
+            background: white;
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 13px;
+            color: #444;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+    </style>
+</head>
+<body>
+
+    <h1>🏫 Assignment 2 – Interactive Campus Map</h1>
+    <p class="sub">Click on any building to learn more. Hover to preview the name.</p>
+
+    <div id="tooltip"></div>
+
+    <div class="map-wrapper">
+        <!--
+            Campus map drawn as an inline SVG, saved as a data URI.
+            Buildings are labeled; their bounding boxes match the <area> coords below.
+            Map size: 760 × 500
+        -->
+        <img
+            src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='500'%3E%3C!-- Background --%3E%3Crect width='760' height='500' fill='%23c8e6c9' rx='10'/%3E%3C!-- Roads --%3E%3Crect x='0' y='230' width='760' height='40' fill='%23bdbdbd' opacity='.7'/%3E%3Crect x='350' y='0' width='40' height='500' fill='%23bdbdbd' opacity='.7'/%3E%3Ctext x='380' y='225' text-anchor='middle' font-size='11' fill='%23555' font-family='Arial'%3EMain Road%3C/text%3E%3C!-- MAIN GATE --%3E%3Crect x='330' y='470' width='100' height='30' fill='%23795548' rx='4'/%3E%3Ctext x='380' y='490' text-anchor='middle' font-size='13' fill='white' font-family='Arial' font-weight='bold'%3EMain Gate%3C/text%3E%3C!-- LIBRARY --%3E%3Crect x='40' y='40' width='180' height='120' fill='%231565c0' rx='8'/%3E%3Ctext x='130' y='95' text-anchor='middle' font-size='16' fill='white' font-family='Arial' font-weight='bold'%3E📚%3C/text%3E%3Ctext x='130' y='118' text-anchor='middle' font-size='13' fill='white' font-family='Arial'%3ELibrary%3C/text%3E%3C!-- ADMIN BLOCK --%3E%3Crect x='430' y='40' width='180' height='120' fill='%23e53935' rx='8'/%3E%3Ctext x='520' y='95' text-anchor='middle' font-size='16' fill='white' font-family='Arial' font-weight='bold'%3E🏛%3C/text%3E%3Ctext x='520' y='118' text-anchor='middle' font-size='13' fill='white' font-family='Arial'%3EAdmin Block%3C/text%3E%3C!-- CAFETERIA --%3E%3Crect x='40' y='280' width='180' height='120' fill='%23f57c00' rx='8'/%3E%3Ctext x='130' y='336' text-anchor='middle' font-size='16' fill='white' font-family='Arial' font-weight='bold'%3E🍽%3C/text%3E%3Ctext x='130' y='359' text-anchor='middle' font-size='13' fill='white' font-family='Arial'%3ECafeteria%3C/text%3E%3C!-- SPORTS COMPLEX --%3E%3Crect x='430' y='280' width='180' height='120' fill='%232e7d32' rx='8'/%3E%3Ctext x='520' y='336' text-anchor='middle' font-size='16' fill='white' font-family='Arial' font-weight='bold'%3E⚽%3C/text%3E%3Ctext x='520' y='359' text-anchor='middle' font-size='13' fill='white' font-family='Arial'%3ESports Complex%3C/text%3E%3C!-- CS DEPARTMENT --%3E%3Crect x='255' y='40' width='80' height='70' fill='%236a1b9a' rx='6'/%3E%3Ctext x='295' y='70' text-anchor='middle' font-size='11' fill='white' font-family='Arial'%3E💻%3C/text%3E%3Ctext x='295' y='88' text-anchor='middle' font-size='10' fill='white' font-family='Arial'%3ECS Dept%3C/text%3E%3C!-- HOSTEL --%3E%3Crect x='620' y='280' width='120' height='120' fill='%2300838f' rx='8'/%3E%3Ctext x='680' y='336' text-anchor='middle' font-size='16' fill='white' font-family='Arial'%3E🏠%3C/text%3E%3Ctext x='680' y='359' text-anchor='middle' font-size='12' fill='white' font-family='Arial'%3EHostel%3C/text%3E%3C!-- Playground --%3E%3Cellipse cx='200' cy='195' rx='70' ry='30' fill='%23a5d6a7' stroke='%2343a047' stroke-width='2'/%3E%3Ctext x='200' y='200' text-anchor='middle' font-size='11' fill='%231b5e20' font-family='Arial'%3EPlayground%3C/text%3E%3C/svg%3E"
+            alt="GEHU Campus Map"
+            width="760"
+            height="500"
+            usemap="#campus-map">
+    </div>
+
+    <map name="campus-map">
+        <!-- Library: rect x=40,y=40 w=180 h=120 -->
+        <area shape="rect" coords="40,40,220,160"
+              href="campus_library.html" target="_blank"
+              alt="Library"
+              onmousemove="showTip(event,'📚 Library – Click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('📚 Library','A 3-floor building with 50,000+ books, digital resources, reading halls, and Wi-Fi.')">
+
+        <!-- Admin Block: rect x=430,y=40 w=180 h=120 -->
+        <area shape="rect" coords="430,40,610,160"
+              href="campus_admin.html" target="_blank"
+              alt="Admin Block"
+              onmousemove="showTip(event,'🏛 Admin Block – Click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('🏛 Admin Block','Houses the Principal office, accounts, HR, and student affairs departments.')">
+
+        <!-- CS Department: rect x=255,y=40 w=80 h=70 -->
+        <area shape="rect" coords="255,40,335,110"
+              href="campus_cs_dept.html" target="_blank"
+              alt="CS Department"
+              onmousemove="showTip(event,'💻 CS Department – Click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('💻 CS Department','Offers BCA, MCA, B.Tech programs. Equipped with modern computer labs and project rooms.')">
+
+        <!-- Cafeteria: rect x=40,y=280 w=180 h=120 -->
+        <area shape="rect" coords="40,280,220,400"
+              href="campus_cafeteria.html" target="_blank"
+              alt="Cafeteria"
+              onmousemove="showTip(event,'🍽 Cafeteria – Click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('🍽 Cafeteria','Hygienic, affordable meals for students. Serves breakfast, lunch, snacks & dinner.')">
+
+        <!-- Sports Complex: rect x=430,y=280 w=180 h=120 -->
+        <area shape="rect" coords="430,280,610,400"
+              href="campus_sports.html" target="_blank"
+              alt="Sports Complex"
+              onmousemove="showTip(event,'⚽ Sports Complex – Click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('⚽ Sports Complex','Multi-sport facilities: cricket, football, basketball, badminton, and a gymnasium.')">
+
+        <!-- Hostel: rect x=620,y=280 w=120 h=120 -->
+        <area shape="rect" coords="620,280,740,400"
+              href="campus_hostel.html" target="_blank"
+              alt="Hostel"
+              onmousemove="showTip(event,'🏠 Hostel – Click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('🏠 Hostel','Separate boys and girls hostels with 24/7 security, Wi-Fi, and mess facilities.')">
+
+        <!-- Main Gate: rect x=330,y=470 w=100 h=30 -->
+        <area shape="rect" coords="330,470,430,500"
+              href="#"
+              alt="Main Gate"
+              onmousemove="showTip(event,'🚪 Main Gate – Entry/Exit point')"
+              onmouseout="hideTip()"
+              onclick="showInfo('🚪 Main Gate','Main entry and exit point of the campus. 24-hour security check.'); return false;">
+
+        <!-- Playground: ellipse approx rect -->
+        <area shape="circle" coords="200,195,65"
+              href="#"
+              alt="Playground"
+              onmousemove="showTip(event,'🏃 Playground – Open ground')"
+              onmouseout="hideTip()"
+              onclick="showInfo('🏃 Playground','Open ground used for morning PT, events, and informal sports activities.'); return false;">
+    </map>
+
+    <!-- Info bar -->
+    <div class="info-bar" id="info-bar">
+        <b>ℹ️ Campus Info:</b> Click on any building on the map above to see details here.
+    </div>
+
+    <div class="legend">
+        <div class="legend-item"><span class="dot" style="background:#1565c0"></span>Library</div>
+        <div class="legend-item"><span class="dot" style="background:#e53935"></span>Admin Block</div>
+        <div class="legend-item"><span class="dot" style="background:#6a1b9a"></span>CS Dept</div>
+        <div class="legend-item"><span class="dot" style="background:#f57c00"></span>Cafeteria</div>
+        <div class="legend-item"><span class="dot" style="background:#2e7d32"></span>Sports Complex</div>
+        <div class="legend-item"><span class="dot" style="background:#00838f"></span>Hostel</div>
+    </div>
+
+    <div id="tooltip"></div>
+
+    <script>
+        const tip = document.getElementById('tooltip');
+        function showTip(e, text) {
+            tip.textContent = text;
+            tip.style.display = 'block';
+            tip.style.left = (e.clientX + 14) + 'px';
+            tip.style.top  = (e.clientY - 32) + 'px';
+        }
+        function hideTip() { tip.style.display = 'none'; }
+
+        function showInfo(title, desc) {
+            document.getElementById('info-bar').innerHTML =
+                '<b>' + title + ':</b> ' + desc;
+        }
+    </script>
+</body>
+</html>

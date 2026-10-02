@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 5 - Image Map</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 30px; }
+        h1 { color: #e67e22; text-align: center; margin-bottom: 6px; }
+        p.subtitle { text-align: center; color: #777; margin-bottom: 30px; }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        h2 { color: #e67e22; border-left: 4px solid #e67e22; padding-left: 12px; margin-bottom: 14px; }
+        .map-container { text-align: center; }
+        .map-container svg { max-width: 100%; }
+        #tooltip {
+            position: fixed;
+            background: rgba(0,0,0,0.78);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            pointer-events: none;
+            display: none;
+            z-index: 999;
+        }
+        area { cursor: pointer; }
+        p.note { color: #555; font-size: 13px; margin-top: 10px; text-align: center; }
+        code { background: #fef3e2; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Lab 5 – HTML Image Map</h1>
+    <p class="subtitle">Demonstrates clickable areas: circle, rect, poly on a single image using &lt;map&gt; and &lt;area&gt; tags</p>
+    <div id="tooltip"></div>
+
+    <!-- ① Circle Map -->
+    <div class="section">
+        <h2>① Circle Area – <code>shape="circle"</code></h2>
+        <div class="map-container">
+            <!-- SVG used as the mappable image (works perfectly with usemap) -->
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='500' height='220'>
+                <rect width='500' height='220' fill='%23fff3cd' rx='10'/>
+                <circle cx='250' cy='110' r='80' fill='%23f39c12' opacity='0.8'/>
+                <text x='250' y='115' text-anchor='middle' font-size='16' fill='white' font-family='Arial'>Click Me!</text>
+                <text x='250' y='200' text-anchor='middle' font-size='11' fill='%23888' font-family='Arial'>circle area: coords=250,110,80</text>
+            </svg>"
+                 alt="Circle Image Map" width="500" height="220"
+                 usemap="#circle-map"
+                 style="border:2px solid #f39c12; border-radius:8px;">
+        </div>
+        <map name="circle-map">
+            <area shape="circle" coords="250,110,80" href="#"
+                  alt="Circle Area"
+                  onclick="showAlert('You clicked the CIRCLE area! (shape=circle, coords=250,110,80)'); return false;"
+                  onmousemove="showTip(event,'Circle – shape=circle')"
+                  onmouseout="hideTip()">
+        </map>
+        <p class="note">Syntax: <code>&lt;area shape="circle" coords="cx,cy,radius"&gt;</code></p>
+    </div>
+
+    <!-- ② Rect Map -->
+    <div class="section">
+        <h2>② Rectangle Area – <code>shape="rect"</code></h2>
+        <div class="map-container">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='500' height='200'>
+                <rect width='500' height='200' fill='%23d5f5e3' rx='10'/>
+                <rect x='140' y='50' width='220' height='100' fill='%2327ae60' rx='8' opacity='0.85'/>
+                <text x='250' y='105' text-anchor='middle' font-size='16' fill='white' font-family='Arial'>Click Me!</text>
+                <text x='250' y='180' text-anchor='middle' font-size='11' fill='%23888' font-family='Arial'>rect area: coords=140,50,360,150</text>
+            </svg>"
+                 alt="Rect Image Map" width="500" height="200"
+                 usemap="#rect-map"
+                 style="border:2px solid #27ae60; border-radius:8px;">
+        </div>
+        <map name="rect-map">
+            <area shape="rect" coords="140,50,360,150" href="#"
+                  alt="Rectangle Area"
+                  onclick="showAlert('You clicked the RECTANGLE area! (shape=rect, coords=140,50,360,150)'); return false;"
+                  onmousemove="showTip(event,'Rectangle – shape=rect')"
+                  onmouseout="hideTip()">
+        </map>
+        <p class="note">Syntax: <code>&lt;area shape="rect" coords="x1,y1,x2,y2"&gt;</code></p>
+    </div>
+
+    <!-- ③ Poly Map -->
+    <div class="section">
+        <h2>③ Polygon Area – <code>shape="poly"</code></h2>
+        <div class="map-container">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='500' height='220'>
+                <rect width='500' height='220' fill='%23d6eaf8' rx='10'/>
+                <polygon points='250,30 370,150 130,150' fill='%232980b9' opacity='0.85'/>
+                <text x='250' y='135' text-anchor='middle' font-size='14' fill='white' font-family='Arial'>Click!</text>
+                <text x='250' y='200' text-anchor='middle' font-size='11' fill='%23888' font-family='Arial'>poly area: 250,30,370,150,130,150</text>
+            </svg>"
+                 alt="Polygon Image Map" width="500" height="220"
+                 usemap="#poly-map"
+                 style="border:2px solid #2980b9; border-radius:8px;">
+        </div>
+        <map name="poly-map">
+            <area shape="poly" coords="250,30,370,150,130,150" href="#"
+                  alt="Triangle Area"
+                  onclick="showAlert('You clicked the POLYGON (triangle) area! (shape=poly)'); return false;"
+                  onmousemove="showTip(event,'Polygon – shape=poly')"
+                  onmouseout="hideTip()">
+        </map>
+        <p class="note">Syntax: <code>&lt;area shape="poly" coords="x1,y1,x2,y2,x3,y3,..."&gt;</code></p>
+    </div>
+
+    <!-- ④ Mixed Map -->
+    <div class="section">
+        <h2>④ Mixed Map – circle, rect, and poly on one image</h2>
+        <div class="map-container">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='220'>
+                <rect width='600' height='220' fill='%23fdfefe' rx='10' stroke='%23ccc'/>
+                <!-- CIRCLE -->
+                <circle cx='100' cy='110' r='55' fill='%23f39c12' opacity='0.85'/>
+                <text x='100' y='115' text-anchor='middle' font-size='13' fill='white' font-family='Arial'>Circle</text>
+                <!-- RECT -->
+                <rect x='210' y='60' width='160' height='100' fill='%2327ae60' rx='6' opacity='0.85'/>
+                <text x='290' y='115' text-anchor='middle' font-size='13' fill='white' font-family='Arial'>Rect</text>
+                <!-- POLY -->
+                <polygon points='450,30 550,190 350,190' fill='%23e74c3c' opacity='0.85'/>
+                <text x='450' y='160' text-anchor='middle' font-size='13' fill='white' font-family='Arial'>Poly</text>
+            </svg>"
+                 alt="Mixed Image Map" width="600" height="220"
+                 usemap="#mixed-map"
+                 style="border:2px solid #ccc; border-radius:8px;">
+        </div>
+        <map name="mixed-map">
+            <area shape="circle" coords="100,110,55"           href="#" alt="Circle"
+                  onclick="showAlert('CIRCLE area clicked!'); return false;"
+                  onmousemove="showTip(event,'Circle zone')" onmouseout="hideTip()">
+            <area shape="rect"   coords="210,60,370,160"       href="#" alt="Rectangle"
+                  onclick="showAlert('RECTANGLE area clicked!'); return false;"
+                  onmousemove="showTip(event,'Rectangle zone')" onmouseout="hideTip()">
+            <area shape="poly"   coords="450,30,550,190,350,190" href="#" alt="Triangle"
+                  onclick="showAlert('POLYGON area clicked!'); return false;"
+                  onmousemove="showTip(event,'Polygon zone')" onmouseout="hideTip()">
+        </map>
+        <p class="note">One <code>&lt;map&gt;</code> with multiple <code>&lt;area&gt;</code> tags of different shapes.</p>
+    </div>
+
+    <script>
+        function showAlert(msg) { alert(msg); }
+        const tip = document.getElementById('tooltip');
+        function showTip(e, text) {
+            tip.textContent = text;
+            tip.style.display = 'block';
+            tip.style.left = (e.clientX + 14) + 'px';
+            tip.style.top  = (e.clientY - 28) + 'px';
+        }
+        function hideTip() { tip.style.display = 'none'; }
+    </script>
+</body>
+</html>

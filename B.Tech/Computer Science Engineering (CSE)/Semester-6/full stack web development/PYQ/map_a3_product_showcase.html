@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 3 – Product Showcase: Clickable Car</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1c1c2e, #2d2d44);
+            color: #eee;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+        }
+        h1 { color: #ffca28; margin-bottom: 4px; font-size: 24px; }
+        p.sub { color: #aaa; font-size: 14px; margin-bottom: 24px; }
+
+        .map-wrapper {
+            position: relative;
+            display: inline-block;
+            border: 2px solid #ffca28;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(255,202,40,0.2);
+        }
+        .map-wrapper img { display: block; cursor: pointer; }
+
+        #tooltip {
+            position: fixed;
+            background: rgba(28,28,46,0.95);
+            border: 1px solid #ffca28;
+            color: #ffca28;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            pointer-events: none;
+            display: none;
+            z-index: 999;
+        }
+
+        /* Side info panel */
+        .layout {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .info-panel {
+            width: 280px;
+            background: #2a2a40;
+            border: 1px solid #ffca28;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 220px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .info-panel h2 { color: #ffca28; font-size: 18px; margin-bottom: 10px; }
+        .info-panel p  { color: #ccc; font-size: 14px; line-height: 1.6; }
+        .info-panel .part-icon { font-size: 42px; display: block; text-align: center; margin-bottom: 10px; }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        .legend-item {
+            background: #2a2a40;
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 13px;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+    </style>
+</head>
+<body>
+    <h1>🚗 Assignment 3 – Product Showcase: Clickable Car</h1>
+    <p class="sub">Click on any part of the car to learn more about it</p>
+
+    <div id="tooltip"></div>
+
+    <div class="layout">
+        <div class="map-wrapper">
+            <!--
+                Car drawn as inline SVG (760×380).
+                Part regions are clearly drawn; coords match <area> tags below.
+            -->
+            <img
+                src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='380'%3E%3C!-- Sky gradient background --%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%231a237e'/%3E%3Cstop offset='1' stop-color='%23283593'/%3E%3C/linearGradient%3E%3ClinearGradient id='road' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23424242'/%3E%3Cstop offset='1' stop-color='%23212121'/%3E%3C/linearGradient%3E%3ClinearGradient id='carBody' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23e53935'/%3E%3Cstop offset='1' stop-color='%23b71c1c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='760' height='380' fill='url(%23sky)'/%3E%3Crect y='280' width='760' height='100' fill='url(%23road)'/%3E%3Crect y='275' width='760' height='8' fill='%23616161'/%3E%3Crect y='318' x='0' width='100' height='6' fill='%23ffeb3b'/%3E%3Crect y='318' x='150' width='100' height='6' fill='%23ffeb3b'/%3E%3Crect y='318' x='300' width='100' height='6' fill='%23ffeb3b'/%3E%3Crect y='318' x='450' width='100' height='6' fill='%23ffeb3b'/%3E%3Crect y='318' x='600' width='100' height='6' fill='%23ffeb3b'/%3E%3C!-- Car body --%3E%3Crect x='80' y='200' width='600' height='80' rx='10' fill='url(%23carBody)'/%3E%3C!-- Car roof (cabin) --%3E%3Cpolygon points='190,130 260,130 370,200 570,200 600,200 540,130 360,120' fill='%23c62828'/%3E%3C!-- Windows --%3E%3Cpolygon points='275,140 360,140 360,192 280,192' fill='%2390caf9' opacity='.85'/%3E%3Cpolygon points='370,140 525,140 525,192 370,192' fill='%2390caf9' opacity='.85'/%3E%3C!-- Front hood --%3E%3Crect x='570' y='200' width='110' height='55' rx='5' fill='%23b71c1c'/%3E%3Crect x='575' y='248' width='100' height='12' rx='3' fill='%23880808'/%3E%3C!-- Headlight (front) --%3E%3Crect x='665' y='210' width='28' height='18' rx='4' fill='%23fff9c4'/%3E%3C!-- Bumper --%3E%3Crect x='660' y='258' width='80' height='20' rx='5' fill='%23757575'/%3E%3C!-- Rear --%3E%3Crect x='80' y='200' width='80' height='55' rx='5' fill='%23b71c1c'/%3E%3Crect x='72' y='210' width='28' height='18' rx='4' fill='%23ef9a9a'/%3E%3Crect x='0' y='258' width='88' height='20' rx='5' fill='%23757575'/%3E%3C!-- Door line --%3E%3Cline x1='380' y1='200' x2='375' y2='275' stroke='%23880808' stroke-width='2'/%3E%3C!-- WHEELS (circles) --%3E%3C!-- Left rear wheel --%3E%3Ccircle cx='200' cy='278' r='55' fill='%23212121'/%3E%3Ccircle cx='200' cy='278' r='35' fill='%23616161'/%3E%3Ccircle cx='200' cy='278' r='15' fill='%23bdbdbd'/%3E%3C!-- Right front wheel --%3E%3Ccircle cx='570' cy='278' r='55' fill='%23212121'/%3E%3Ccircle cx='570' cy='278' r='35' fill='%23616161'/%3E%3Ccircle cx='570' cy='278' r='15' fill='%23bdbdbd'/%3E%3C!-- ENGINE label zone --%3E%3Crect x='575' y='203' width='90' height='43' rx='3' fill='none' stroke='%23ffca28' stroke-width='2' stroke-dasharray='5,3' opacity='.7'/%3E%3Ctext x='620' y='230' text-anchor='middle' font-size='11' fill='%23ffca28' font-family='Arial'%3EENGINE%3C/text%3E%3C!-- INTERIOR label --%3E%3Crect x='280' y='140' width='240' height='52' rx='3' fill='none' stroke='%23a5d6a7' stroke-width='2' stroke-dasharray='5,3' opacity='.7'/%3E%3Ctext x='400' y='170' text-anchor='middle' font-size='11' fill='%23a5d6a7' font-family='Arial'%3EINTERIOR%3C/text%3E%3C!-- WHEELS label --%3E%3Ctext x='200' y='340' text-anchor='middle' font-size='11' fill='%23fff9c4' font-family='Arial'%3EWHEEL%3C/text%3E%3Ctext x='570' y='340' text-anchor='middle' font-size='11' fill='%23fff9c4' font-family='Arial'%3EWHEEL%3C/text%3E%3C!-- HEADLIGHT label --%3E%3Ctext x='685' y='205' text-anchor='middle' font-size='10' fill='%23fff176' font-family='Arial'%3ELIGHT%3C/text%3E%3C/svg%3E"
+                alt="Interactive Car Diagram"
+                width="760"
+                height="380"
+                usemap="#car-map">
+        </div>
+
+        <div class="info-panel" id="info-panel">
+            <span class="part-icon">🚗</span>
+            <h2>Car Parts Explorer</h2>
+            <p>Click on any part of the car on the left to see detailed information about it here.</p>
+        </div>
+    </div>
+
+    <map name="car-map">
+        <!-- Wheels (circles) -->
+        <area shape="circle" coords="200,278,55"
+              href="#info-panel"
+              alt="Rear Wheel"
+              onmousemove="showTip(event,'🔵 Rear Wheel – click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('🔵 Wheels','Tyre Size: 215/55 R17. Alloy wheels with disc brakes. Low-profile tyres for better grip and handling. Tubeless design for safety.'); return false;">
+
+        <area shape="circle" coords="570,278,55"
+              href="#info-panel"
+              alt="Front Wheel"
+              onmousemove="showTip(event,'🔵 Front Wheel – click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('🔵 Wheels','Tyre Size: 215/55 R17. Alloy wheels with disc brakes. Low-profile tyres for better grip and handling. Tubeless design for safety.'); return false;">
+
+        <!-- Engine (front hood area) -->
+        <area shape="rect" coords="575,200,665,248"
+              href="#info-panel"
+              alt="Engine"
+              onmousemove="showTip(event,'⚙️ Engine – click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('⚙️ Engine','1500cc DOHC 4-cylinder turbocharged engine. 110 BHP @ 6000 RPM. 145 Nm torque. Mated to a 6-speed manual gearbox with paddle shifters.'); return false;">
+
+        <!-- Interior / Windows -->
+        <area shape="poly" coords="275,140, 525,140, 525,200, 280,200"
+              href="#info-panel"
+              alt="Interior"
+              onmousemove="showTip(event,'🪑 Interior – click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('🪑 Interior','Dual-tone leatherette seats with 8-way power adjustment. 10.1&quot; touchscreen infotainment with Android Auto &amp; Apple CarPlay. Panoramic sunroof. Ambient lighting.'); return false;">
+
+        <!-- Headlight -->
+        <area shape="rect" coords="665,208,695,230"
+              href="#info-panel"
+              alt="Headlight"
+              onmousemove="showTip(event,'💡 Headlight – click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('💡 Headlights','Full LED projector headlights with DRL (Daytime Running Lights). Auto high-beam assist. 120m illumination range. Adaptive cornering lights.'); return false;">
+
+        <!-- Bumper (front) -->
+        <area shape="rect" coords="660,256,740,280"
+              href="#info-panel"
+              alt="Front Bumper"
+              onmousemove="showTip(event,'🛡 Front Bumper – click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('🛡 Bumper','Energy-absorbing front bumper with integrated fog lamp housing. Meets Euro NCAP crash safety standards. Reinforced with steel cross-member.'); return false;">
+
+        <!-- Rear / Boot -->
+        <area shape="rect" coords="72,207,110,230"
+              href="#info-panel"
+              alt="Tail Light"
+              onmousemove="showTip(event,'🔴 Tail Light – click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('🔴 Tail Lights','LED sequential turn-signal tail lamps. Wrap-around design. Auto brake-light intensification under hard braking.'); return false;">
+
+        <!-- Car body / door -->
+        <area shape="poly" coords="160,200, 570,200, 570,275, 160,275"
+              href="#info-panel"
+              alt="Car Body"
+              onmousemove="showTip(event,'🚗 Car Body – click to learn more')"
+              onmouseout="hideTip()"
+              onclick="showInfo('🚗 Car Body','Monocoque steel body with hot-dip galvanized anti-corrosion coating. 5-star safety cell structure. Four doors with soft-close mechanism.'); return false;">
+    </map>
+
+    <div class="legend">
+        <div class="legend-item"><span class="dot" style="background:#616161"></span>Wheels</div>
+        <div class="legend-item"><span class="dot" style="background:#ffca28"></span>Engine</div>
+        <div class="legend-item"><span class="dot" style="background:#a5d6a7"></span>Interior</div>
+        <div class="legend-item"><span class="dot" style="background:#fff176"></span>Headlights</div>
+        <div class="legend-item"><span class="dot" style="background:#ef9a9a"></span>Tail Lights</div>
+        <div class="legend-item"><span class="dot" style="background:#757575"></span>Bumper</div>
+        <div class="legend-item"><span class="dot" style="background:#e53935"></span>Car Body</div>
+    </div>
+
+    <script>
+        const tip = document.getElementById('tooltip');
+        function showTip(e, text) {
+            tip.textContent = text;
+            tip.style.display = 'block';
+            tip.style.left = (e.clientX + 14) + 'px';
+            tip.style.top  = (e.clientY - 32) + 'px';
+        }
+        function hideTip() { tip.style.display = 'none'; }
+
+        function showInfo(title, desc) {
+            document.getElementById('info-panel').innerHTML =
+                '<span class="part-icon">' + title.split(' ')[0] + '</span>' +
+                '<h2>' + title + '</h2>' +
+                '<p>' + desc + '</p>';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 1 - Basic HTML Tags</title>
+    <style>
+        body { font-family: Georgia, serif; margin: 30px; background: #fffdf5; color: #333; }
+        h1 { color: #c0392b; text-align: center; margin-bottom: 20px; }
+        .section { border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-bottom: 20px; background: #fff; }
+        .section h2 { color: #2980b9; border-bottom: 2px solid #3498db; padding-bottom: 6px; }
+        code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <h1>Lab 1 – Basic HTML Tags Demonstration</h1>
+
+    <!-- Heading Tags -->
+    <div class="section">
+        <h2>Heading Tags</h2>
+        <h1>Heading 1 – &lt;h1&gt;</h1>
+        <h2>Heading 2 – &lt;h2&gt;</h2>
+        <h3>Heading 3 – &lt;h3&gt;</h3>
+        <h4>Heading 4 – &lt;h4&gt;</h4>
+        <h5>Heading 5 – &lt;h5&gt;</h5>
+        <h6>Heading 6 – &lt;h6&gt;</h6>
+    </div>
+
+    <!-- Paragraph & Text Formatting -->
+    <div class="section">
+        <h2>Text Formatting Tags</h2>
+        <p>This is a <b>bold</b> word using <code>&lt;b&gt;</code>.</p>
+        <p>This is an <i>italic</i> word using <code>&lt;i&gt;</code>.</p>
+        <p>This is <u>underlined</u> text using <code>&lt;u&gt;</code>.</p>
+        <p>This is <strong>strong</strong> text using <code>&lt;strong&gt;</code>.</p>
+        <p>This is <em>emphasized</em> text using <code>&lt;em&gt;</code>.</p>
+        <p>This is <mark>highlighted</mark> text using <code>&lt;mark&gt;</code>.</p>
+        <p>This is <del>strikethrough</del> text using <code>&lt;del&gt;</code>.</p>
+        <p>This is <small>small</small> text using <code>&lt;small&gt;</code>.</p>
+        <p>H<sub>2</sub>O uses <code>&lt;sub&gt;</code>. E=mc<sup>2</sup> uses <code>&lt;sup&gt;</code>.</p>
+    </div>
+
+    <!-- Line Break, Horizontal Rule -->
+    <div class="section">
+        <h2>Line Break &amp; Horizontal Rule</h2>
+        <p>Line 1<br>Line 2 after &lt;br&gt; tag</p>
+        <hr>
+        <p>Above is a &lt;hr&gt; horizontal rule.</p>
+    </div>
+
+    <!-- Links -->
+    <div class="section">
+        <h2>Anchor / Link Tag</h2>
+        <p><a href="https://www.google.com" target="_blank">Click here to visit Google</a> – using <code>&lt;a href="..."&gt;</code></p>
+    </div>
+
+    <!-- Image -->
+    <div class="section">
+        <h2>Image Tag</h2>
+        <img src="https://via.placeholder.com/200x100/3498db/ffffff?text=Sample+Image"
+             alt="Sample Image" width="200" height="100">
+        <p>Image embedded using <code>&lt;img src="..." alt="..." width="200" height="100"&gt;</code></p>
+    </div>
+
+    <!-- Blockquote & Pre -->
+    <div class="section">
+        <h2>Blockquote &amp; Preformatted Text</h2>
+        <blockquote>"The best way to learn HTML is by doing it."</blockquote>
+        <pre>
+function hello() {
+    console.log("Hello, World!");
+}
+        </pre>
+    </div>
+
+    <!-- Comments -->
+    <div class="section">
+        <h2>HTML Comment</h2>
+        <!-- This is an HTML comment – not visible in browser -->
+        <p>HTML comments are written as <code>&lt;!-- comment --&gt;</code> and are invisible in the browser output.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 2 - Lists and Tables</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background: #f0f8ff; color: #333; }
+        h1 { color: #16a085; text-align: center; }
+        h2 { color: #1abc9c; border-left: 4px solid #1abc9c; padding-left: 10px; }
+        .section { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+        th { background: #16a085; color: white; padding: 10px; text-align: left; }
+        td { padding: 8px 10px; border: 1px solid #ccc; }
+        tr:nth-child(even) { background: #f2f9f7; }
+        ul, ol { padding-left: 24px; line-height: 2; }
+        dl dt { font-weight: bold; color: #16a085; margin-top: 8px; }
+        dl dd { margin-left: 20px; color: #555; }
+    </style>
+</head>
+<body>
+    <h1>Lab 2 – Lists and Tables</h1>
+
+    <!-- Unordered List -->
+    <div class="section">
+        <h2>Unordered List &lt;ul&gt;</h2>
+        <ul>
+            <li>HTML – HyperText Markup Language</li>
+            <li>CSS – Cascading Style Sheets</li>
+            <li>JavaScript – Scripting Language</li>
+            <li>PHP – Server-side Scripting</li>
+        </ul>
+    </div>
+
+    <!-- Ordered List -->
+    <div class="section">
+        <h2>Ordered List &lt;ol&gt;</h2>
+        <ol>
+            <li>Plan your web page layout</li>
+            <li>Write the HTML structure</li>
+            <li>Apply CSS styling</li>
+            <li>Add JavaScript interactivity</li>
+            <li>Test and deploy</li>
+        </ol>
+    </div>
+
+    <!-- Nested List -->
+    <div class="section">
+        <h2>Nested List</h2>
+        <ul>
+            <li>Frontend
+                <ul>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                </ul>
+            </li>
+            <li>Backend
+                <ul>
+                    <li>Node.js</li>
+                    <li>Python</li>
+                    <li>PHP</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Definition List -->
+    <div class="section">
+        <h2>Definition List &lt;dl&gt;</h2>
+        <dl>
+            <dt>HTML</dt>
+            <dd>The standard markup language for creating web pages.</dd>
+            <dt>CSS</dt>
+            <dd>A stylesheet language used to describe the presentation of HTML.</dd>
+            <dt>JavaScript</dt>
+            <dd>A scripting language used to create dynamic web content.</dd>
+        </dl>
+    </div>
+
+    <!-- Simple Table -->
+    <div class="section">
+        <h2>Simple Table &lt;table&gt;</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Roll No</th>
+                    <th>Student Name</th>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>101</td><td>Aditya Pandey</td><td>Web Development</td><td>95</td></tr>
+                <tr><td>102</td><td>Rahul Sharma</td><td>Web Development</td><td>88</td></tr>
+                <tr><td>103</td><td>Priya Singh</td><td>Web Development</td><td>92</td></tr>
+                <tr><td>104</td><td>Amit Kumar</td><td>Web Development</td><td>78</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Table with colspan and rowspan (Seminar Schedule) -->
+    <div class="section">
+        <h2>Table with colspan &amp; rowspan – Seminar Schedule</h2>
+        <table border="1" cellpadding="8">
+            <thead>
+                <tr>
+                    <th rowspan="3">Day</th>
+                    <th colspan="3">Seminar</th>
+                </tr>
+                <tr>
+                    <th colspan="2">Schedule</th>
+                    <th rowspan="2">Topic</th>
+                </tr>
+                <tr>
+                    <th>Begin</th>
+                    <th>End</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2">Monday</td>
+                    <td rowspan="2">8:00 a.m.</td>
+                    <td rowspan="2">5:00 p.m.</td>
+                    <td>Introduction to XML</td>
+                </tr>
+                <tr>
+                    <td>Validity: DTD and Relax NG</td>
+                </tr>
+                <tr>
+                    <td rowspan="3">Tuesday</td>
+                    <td>8:00 a.m.</td>
+                    <td>11:00 a.m.</td>
+                    <td rowspan="2">XPath</td>
+                </tr>
+                <tr>
+                    <td>11:00 a.m.</td>
+                    <td>2:00 p.m.</td>
+                </tr>
+                <tr>
+                    <td>2:00 p.m.</td>
+                    <td>5:00 p.m.</td>
+                    <td>XSL Transformations</td>
+                </tr>
+                <tr>
+                    <td>Wednesday</td>
+                    <td>8:00 a.m.</td>
+                    <td>12:00 p.m.</td>
+                    <td>XSL Formatting Objects</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

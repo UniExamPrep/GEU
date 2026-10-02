@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- ============================================================
+     Lab 6 – CSS: Inline, Internal, and External Stylesheets
+     External CSS → lab6_style.css
+     Internal CSS → <style> block below
+     Inline CSS   → style="" attributes on elements
+     ============================================================ -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 6 - CSS Stylesheets</title>
+
+    <!-- ① EXTERNAL CSS (highest priority after inline) -->
+    <link rel="stylesheet" href="lab6_style.css">
+
+    <!-- ② INTERNAL CSS -->
+    <style>
+        /* Page layout */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 30px 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 6px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 12px;
+        }
+        .badge-inline   { background: #e74c3c; }
+        .badge-internal { background: #2980b9; }
+        .badge-external { background: #27ae60; }
+
+        /* Internal CSS: styles for the comparison table */
+        .compare-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .compare-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        .compare-table td { padding: 9px 10px; border: 1px solid #e1e1e1; font-size: 13px; }
+        .compare-table tr:nth-child(even) { background: #f7f9fc; }
+
+        /* Internal CSS: styled heading */
+        .internal-heading {
+            font-size: 22px;
+            color: #2980b9;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lab 6 – CSS: Inline, Internal &amp; External Stylesheets</h1>
+    <p class="subtitle">Demonstrates all three methods of applying CSS to HTML elements</p>
+
+    <!-- ─────────────────────────────────────────────────────────
+         SECTION 1: INLINE CSS
+         ───────────────────────────────────────────────────────── -->
+    <div class="section">
+        <span class="badge badge-inline">① INLINE CSS</span>
+        <h2 class="internal-heading">What is Inline CSS?</h2>
+        <p style="color: #555; font-size: 14px; margin-bottom: 16px;">
+            Inline CSS is applied directly to an HTML element using the <code style="background:#fdecea; padding:2px 6px; border-radius:3px;">style</code> attribute.
+            It has the highest specificity and overrides both internal and external CSS for that element.
+        </p>
+
+        <!-- Inline styled elements -->
+        <p style="color: white; background: #e74c3c; padding: 12px 16px; border-radius: 6px; font-weight: bold;">
+            🔴 This paragraph uses INLINE CSS: color:white, background:#e74c3c, padding:12px
+        </p>
+        <p style="color: #8e44ad; font-size: 18px; font-style: italic; margin-top: 10px;">
+            🟣 This text is styled inline: color:#8e44ad, font-size:18px, italic
+        </p>
+        <p style="border: 3px dashed #f39c12; padding: 10px; border-radius: 6px; color: #d35400; margin-top: 10px;">
+            🟠 This box uses inline border: 3px dashed #f39c12
+        </p>
+
+        <!-- Code example -->
+        <pre style="background:#1e1e1e; color:#ce9178; padding:14px; border-radius:8px; font-size:13px; margin-top:14px; overflow:auto;">&lt;p style="color: white; background: #e74c3c; padding: 12px;"&gt;
+    Inline styled text
+&lt;/p&gt;</pre>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────────
+         SECTION 2: INTERNAL CSS
+         ───────────────────────────────────────────────────────── -->
+    <div class="section">
+        <span class="badge badge-internal">② INTERNAL CSS</span>
+        <h2 class="internal-heading">What is Internal CSS?</h2>
+        <p style="color:#555; font-size:14px; margin-bottom:14px;">
+            Internal CSS is written inside a <code style="background:#eaf4fb; padding:2px 6px; border-radius:3px;">&lt;style&gt;</code> block in the
+            <code style="background:#eaf4fb; padding:2px 6px; border-radius:3px;">&lt;head&gt;</code> section. It applies styles to the entire page.
+        </p>
+
+        <!-- Elements styled via internal CSS classes above -->
+        <p class="internal-heading">This heading is styled using internal CSS class "internal-heading"</p>
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Inline CSS</th>
+                    <th>Internal CSS</th>
+                    <th>External CSS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Location</td><td>style="" attribute</td><td>&lt;style&gt; in &lt;head&gt;</td><td>Separate .css file</td></tr>
+                <tr><td>Scope</td><td>Single element</td><td>Entire page</td><td>Entire website</td></tr>
+                <tr><td>Reusability</td><td>None</td><td>Within one page</td><td>Across all pages</td></tr>
+                <tr><td>Maintainability</td><td>Low</td><td>Medium</td><td>High</td></tr>
+                <tr><td>Priority</td><td>Highest</td><td>Medium</td><td>Lower (without !important)</td></tr>
+            </tbody>
+        </table>
+
+        <pre style="background:#1e1e1e; color:#9cdcfe; padding:14px; border-radius:8px; font-size:13px; margin-top:14px; overflow:auto;">&lt;style&gt;
+    h2 { color: #2980b9; border-bottom: 3px solid #3498db; }
+    table { border-collapse: collapse; }
+    th { background: #2c3e50; color: white; }
+&lt;/style&gt;</pre>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────────
+         SECTION 3: EXTERNAL CSS
+         ───────────────────────────────────────────────────────── -->
+    <div class="section">
+        <span class="badge badge-external">③ EXTERNAL CSS</span>
+        <h2 class="internal-heading">What is External CSS?</h2>
+        <p style="color:#555; font-size:14px; margin-bottom:14px;">
+            External CSS is written in a separate <code style="background:#eafaf1; padding:2px 6px; border-radius:3px;">.css</code> file and linked
+            via <code style="background:#eafaf1; padding:2px 6px; border-radius:3px;">&lt;link rel="stylesheet" href="lab6_style.css"&gt;</code> in the head.
+        </p>
+
+        <!-- Classes defined in lab6_style.css -->
+        <div class="ext-card">
+            <h3 class="ext-card-title">External Styled Card</h3>
+            <p class="ext-card-text">This card — background, border, shadow, typography — is entirely styled from <strong>lab6_style.css</strong> (the external file).</p>
+            <button class="ext-btn">External CSS Button</button>
+        </div>
+
+        <div class="ext-grid">
+            <div class="ext-box ext-box-1">Box 1 – External</div>
+            <div class="ext-box ext-box-2">Box 2 – External</div>
+            <div class="ext-box ext-box-3">Box 3 – External</div>
+        </div>
+
+        <pre style="background:#1e1e1e; color:#b5cea8; padding:14px; border-radius:8px; font-size:13px; margin-top:14px; overflow:auto;">&lt;!-- In &lt;head&gt; --&gt;
+&lt;link rel="stylesheet" href="lab6_style.css"&gt;
+
+/* In lab6_style.css */
+.ext-card { background: #eafaf1; border-left: 5px solid #27ae60; padding: 20px; }
+.ext-btn   { background: #27ae60; color: white; padding: 10px 24px; }</pre>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q17 - YouTube IFrame Embed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #1a1a2e;
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        h1 {
+            color: #e94560;
+            margin-bottom: 8px;
+        }
+        p {
+            color: #aaa;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .video-container {
+            position: relative;
+            width: 800px;
+            max-width: 100%;
+        }
+        iframe {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(233, 69, 96, 0.4);
+            width: 800px;
+            height: 450px;
+            max-width: 100%;
+        }
+        .label {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Q17 – Embedding a YouTube Video Using IFrame</h1>
+    <p>The iframe below embeds a YouTube video directly into this web page.</p>
+    <div class="video-container">
+        <!-- Embedding a well-known HTML tutorial video -->
+        <iframe
+            src="https://www.youtube.com/embed/qz0aGYrrlhU"
+            title="HTML Tutorial for Beginners"
+            width="800"
+            height="450"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+            Your browser does not support iframes.
+        </iframe>
+    </div>
+    <p class="label">Source: YouTube – HTML Full Course for Beginners</p>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3 - HTML Form</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .form-container {
+            background: white;
+            border-radius: 14px;
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #764ba2;
+            margin-bottom: 8px;
+            font-size: 22px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 16px;
+        }
+        .form-group { margin-bottom: 18px; }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 6px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        input:focus, select:focus, textarea:focus { border-color: #764ba2; }
+        textarea { resize: vertical; height: 80px; }
+        .radio-group, .checkbox-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .radio-group label, .checkbox-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: opacity 0.2s;
+        }
+        .submit-btn:hover { opacity: 0.9; }
+        .reset-btn {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            color: #764ba2;
+            border: 1.5px solid #764ba2;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+        .reset-btn:hover { background: #f5f0ff; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>📝 Lab 3 – Student Registration Form</h1>
+        <p class="subtitle">Demonstrates all major HTML form elements</p>
+
+        <form action="#" method="post">
+
+            <!-- Text input -->
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+            </div>
+
+            <!-- Email input -->
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password">
+            </div>
+
+            <!-- Number input -->
+            <div class="form-group">
+                <label for="rollno">Roll Number</label>
+                <input type="number" id="rollno" name="rollno" placeholder="e.g. 101" min="1">
+            </div>
+
+            <!-- Date input -->
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob">
+            </div>
+
+            <!-- Radio buttons -->
+            <div class="form-group">
+                <label>Gender</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="gender" value="male"> Male</label>
+                    <label><input type="radio" name="gender" value="female"> Female</label>
+                    <label><input type="radio" name="gender" value="other"> Other</label>
+                </div>
+            </div>
+
+            <!-- Select dropdown -->
+            <div class="form-group">
+                <label for="course">Select Course</label>
+                <select id="course" name="course">
+                    <option value="">-- Choose a Course --</option>
+                    <option value="bca">BCA</option>
+                    <option value="bsc">B.Sc. CS</option>
+                    <option value="mca">MCA</option>
+                    <option value="btech">B.Tech</option>
+                </select>
+            </div>
+
+            <!-- Checkboxes -->
+            <div class="form-group">
+                <label>Subjects Enrolled</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="subject" value="html"> HTML</label>
+                    <label><input type="checkbox" name="subject" value="css"> CSS</label>
+                    <label><input type="checkbox" name="subject" value="js"> JavaScript</label>
+                    <label><input type="checkbox" name="subject" value="php"> PHP</label>
+                </div>
+            </div>
+
+            <!-- File input -->
+            <div class="form-group">
+                <label for="photo">Upload Photo</label>
+                <input type="file" id="photo" name="photo" accept="image/*">
+            </div>
+
+            <!-- Textarea -->
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" name="address" placeholder="Enter your address"></textarea>
+            </div>
+
+            <!-- Range input -->
+            <div class="form-group">
+                <label for="satisfaction">Satisfaction Level: <span id="rangeVal">5</span>/10</label>
+                <input type="range" id="satisfaction" name="satisfaction" min="1" max="10" value="5"
+                       oninput="document.getElementById('rangeVal').textContent=this.value">
+            </div>
+
+            <!-- Hidden input -->
+            <input type="hidden" name="form_id" value="student_reg_001">
+
+            <button type="submit" class="submit-btn">Submit Registration</button>
+            <button type="reset" class="reset-btn">Reset Form</button>
+        </form>
+    </div>
+</body>
+</html>

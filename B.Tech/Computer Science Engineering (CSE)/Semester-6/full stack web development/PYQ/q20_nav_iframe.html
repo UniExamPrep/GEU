@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q20 - Navigation Menu with IFrame Target</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; display: flex; height: 100vh; }
+
+        nav {
+            width: 200px;
+            min-width: 200px;
+            background: #2c3e50;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+        }
+        nav h2 {
+            color: #ecf0f1;
+            text-align: center;
+            font-size: 14px;
+            padding: 0 15px 15px;
+            border-bottom: 1px solid #3d5166;
+            margin-bottom: 10px;
+        }
+        nav a {
+            display: block;
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 12px 20px;
+            font-size: 14px;
+            transition: background 0.2s, color 0.2s;
+        }
+        nav a:hover {
+            background: #3498db;
+            color: white;
+        }
+        nav a.active { background: #3498db; color: white; }
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .content-area header {
+            background: #3498db;
+            color: white;
+            padding: 14px 24px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        iframe#content-frame {
+            flex: 1;
+            border: none;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h2>📚 Navigation</h2>
+        <!-- target="content-frame" loads each link inside the iframe below -->
+        <a href="q18_page_b.html"   target="content-frame">🏠 Home</a>
+        <a href="q16_iframe_display.html" target="content-frame">📄 IFrame Demo</a>
+        <a href="q19_iframe_dimensions.html" target="content-frame">📐 Dimensions</a>
+        <a href="lab1_basic_tags.html"  target="content-frame">🏷️ Basic Tags</a>
+        <a href="lab2_list_table.html"  target="content-frame">📋 List &amp; Table</a>
+        <a href="lab3_form.html"        target="content-frame">📝 Form</a>
+        <a href="lab5_image_map.html"   target="content-frame">🗺️ Image Map</a>
+        <a href="lab6_css_styles.html"  target="content-frame">🎨 CSS Styles</a>
+    </nav>
+
+    <div class="content-area">
+        <header>Q20 – Navigation Menu with IFrame Target</header>
+        <!-- All nav links load their pages here -->
+        <iframe name="content-frame" id="content-frame" src="q18_page_b.html" title="Content Frame">
+            Your browser does not support iframes.
+        </iframe>
+    </div>
+</body>
+</html>

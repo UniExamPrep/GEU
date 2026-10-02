@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q19 - IFrame with Height and Width</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+        }
+        h1 { color: #8e44ad; margin-bottom: 10px; }
+        p { color: #555; margin-bottom: 20px; text-align: center; }
+        .iframe-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.2);
+            margin-bottom: 20px;
+        }
+        .iframe-label {
+            font-size: 13px;
+            color: #8e44ad;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        iframe {
+            border: 2px dashed #8e44ad;
+            border-radius: 6px;
+            display: block;
+        }
+        code {
+            background: #f0e6ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Q19 – IFrame with Height and Width Attributes</h1>
+    <p>Demonstrating three different iframes with varying <code>height</code> and <code>width</code> attributes.</p>
+
+    <div class="iframe-box">
+        <div class="iframe-label">Small IFrame: width="300" height="150"</div>
+        <iframe src="q18_page_b.html" width="300" height="150" title="Small IFrame">
+            Your browser does not support iframes.
+        </iframe>
+    </div>
+
+    <div class="iframe-box">
+        <div class="iframe-label">Medium IFrame: width="550" height="250"</div>
+        <iframe src="q18_page_b.html" width="550" height="250" title="Medium IFrame">
+            Your browser does not support iframes.
+        </iframe>
+    </div>
+
+    <div class="iframe-box">
+        <div class="iframe-label">Large IFrame: width="750" height="350"</div>
+        <iframe src="q18_page_b.html" width="750" height="350" title="Large IFrame">
+            Your browser does not support iframes.
+        </iframe>
+    </div>
+</body>
+</html>

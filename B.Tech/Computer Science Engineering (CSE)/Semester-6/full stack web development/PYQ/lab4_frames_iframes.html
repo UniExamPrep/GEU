@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4 - Frames and IFrames</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f4f6f8; }
+
+        /* Header */
+        .page-header {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 18px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        h2 { color: #2c3e50; padding: 16px 20px 8px; font-size: 16px; }
+
+        /* ── 1. Floating Frame ── */
+        .demo-section {
+            background: white;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .demo-label {
+            background: #3498db;
+            color: white;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .demo-body { padding: 16px; }
+        .demo-body p { color: #555; font-size: 13px; margin-bottom: 12px; }
+
+        /* Floating frame: text wraps around an iframe */
+        .float-demo { overflow: hidden; }
+        iframe.float-left {
+            float: left;
+            margin: 0 16px 10px 0;
+            border: 2px solid #3498db;
+            border-radius: 6px;
+        }
+
+        /* ── 2. Navigation Frame (sidebar + content) ── */
+        .nav-frame-demo {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+            height: 280px;
+        }
+        .nav-sidebar {
+            width: 160px;
+            background: #2c3e50;
+            display: flex;
+            flex-direction: column;
+            padding-top: 10px;
+        }
+        .nav-sidebar a {
+            display: block;
+            color: #bdc3c7;
+            padding: 10px 16px;
+            font-size: 13px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .nav-sidebar a:hover { background: #3498db; color: white; }
+        iframe.nav-content {
+            flex: 1;
+            border: none;
+            border-left: 2px solid #3498db;
+        }
+
+        /* ── 3. Mixed Frame (top bar + sidebar + main) ── */
+        .mixed-wrapper {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .mixed-top {
+            background: #e74c3c;
+            color: white;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .mixed-body {
+            display: flex;
+            height: 220px;
+        }
+        .mixed-sidebar {
+            width: 130px;
+            background: #2c3e50;
+            display: flex;
+            flex-direction: column;
+            padding-top: 8px;
+        }
+        .mixed-sidebar a {
+            display: block;
+            color: #bdc3c7;
+            padding: 8px 14px;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        .mixed-sidebar a:hover { background: #e74c3c; color: white; }
+        iframe.mixed-main {
+            flex: 1;
+            border: none;
+            border-left: 2px solid #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">Lab 4 – Frames &amp; IFrames Demo</div>
+
+    <!-- 1. Floating Frame -->
+    <div class="demo-section">
+        <div class="demo-label">① Floating Frame – float:left on iframe, text flows around it</div>
+        <div class="demo-body">
+            <div class="float-demo">
+                <iframe class="float-left" src="q18_page_b.html"
+                        width="260" height="160" title="Floating IFrame"></iframe>
+                <p>A <strong>floating frame</strong> (float iframe) is an iframe positioned so that surrounding text or content wraps around it — similar to a floated image. The &lt;iframe&gt; tag is given a <code>float:left</code> CSS property so that adjacent text fills the remaining horizontal space.</p>
+                <p>This is very useful for embedding supplementary content (like a map, a widget, or a secondary document) alongside your main text without breaking the page flow.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non felis tristique, sagittis enim sit amet, finibus velit. Curabitur feugiat velit et turpis luctus, vel lacinia urna sodales.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Navigation Frame -->
+    <div class="demo-section">
+        <div class="demo-label">② Navigation Frame – sidebar menu loads pages into a named iframe</div>
+        <div class="demo-body">
+            <p>Click a link in the sidebar — it loads in the content area on the right using <code>target="nav-main"</code>.</p>
+            <div class="nav-frame-demo">
+                <nav class="nav-sidebar">
+                    <a href="lab1_basic_tags.html"  target="nav-main">Basic Tags</a>
+                    <a href="lab2_list_table.html"   target="nav-main">Lists &amp; Tables</a>
+                    <a href="q18_page_b.html"        target="nav-main">Page B</a>
+                    <a href="q19_iframe_dimensions.html" target="nav-main">Dimensions</a>
+                </nav>
+                <iframe class="nav-content" name="nav-main"
+                        src="lab1_basic_tags.html" title="Navigation Content"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Mixed Frame -->
+    <div class="demo-section">
+        <div class="demo-label">③ Mixed Frame – top header bar + side menu + main content iframe</div>
+        <div class="demo-body">
+            <p>Combines a top header row with a sidebar navigation frame and a main content iframe.</p>
+            <div class="mixed-wrapper">
+                <div class="mixed-top">🌐 My Website – Mixed Frame Layout</div>
+                <div class="mixed-body">
+                    <nav class="mixed-sidebar">
+                        <a href="lab1_basic_tags.html"  target="mixed-main">Home</a>
+                        <a href="lab2_list_table.html"   target="mixed-main">Tables</a>
+                        <a href="lab3_form.html"         target="mixed-main">Form</a>
+                        <a href="q18_page_b.html"        target="mixed-main">About</a>
+                    </nav>
+                    <iframe class="mixed-main" name="mixed-main"
+                            src="q18_page_b.html" title="Mixed Frame Main"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

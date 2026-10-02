@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 1 – Clickable World Map</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #0d1b2a;
+            color: #eee;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+        }
+        h1 { color: #4fc3f7; margin-bottom: 6px; font-size: 24px; }
+        p.sub { color: #90a4ae; font-size: 14px; margin-bottom: 24px; }
+        .map-wrapper {
+            position: relative;
+            display: inline-block;
+            border: 2px solid #4fc3f7;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(79,195,247,0.25);
+        }
+        .map-wrapper img { display: block; }
+        #tooltip {
+            position: fixed;
+            background: rgba(13,27,42,0.92);
+            border: 1px solid #4fc3f7;
+            color: #4fc3f7;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            pointer-events: none;
+            display: none;
+            z-index: 999;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 22px;
+            justify-content: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #1a2b3c;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 13px;
+            color: #ccc;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+    </style>
+</head>
+<body>
+    <h1>🌍 Assignment 1 – Clickable World Map</h1>
+    <p class="sub">Click on a continent to open its Wikipedia article. Hover to see the name.</p>
+
+    <div id="tooltip"></div>
+
+    <div class="map-wrapper">
+        <!--
+            Using a free, publicly available world map SVG rendered as PNG via Wikipedia.
+            Coordinates are calibrated for the 1024×512 natural Equirectangular map.
+        -->
+        <img
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1024' height='512'>    <rect width='1024' height='512' fill='%230f2035' rx='10'/>    <!-- North America -->    <polygon points='95,60 220,60 250,80 245,180 220,230 185,270 145,270 120,240 90,200 70,140 80,90' fill='%23e74c3c' opacity='0.8'/>    <!-- South America -->    <polygon points='160,270 200,265 240,290 260,340 255,410 235,450 200,460 175,445 155,400 145,340 150,300' fill='%23e67e22' opacity='0.8'/>    <!-- Europe -->    <polygon points='440,55 530,50 560,70 570,110 540,145 500,155 460,145 430,120 425,90' fill='%232ecc71' opacity='0.8'/>    <!-- Africa -->    <polygon points='450,160 520,150 575,170 590,220 590,300 570,370 540,410 500,430 460,420 430,380 420,310 425,230 440,185' fill='%23f1c40f' opacity='0.8'/>    <!-- Asia -->    <polygon points='570,50 850,45 920,70 940,120 900,180 840,210 780,230 700,240 640,220 590,190 560,150 555,90' fill='%233498db' opacity='0.8'/>    <!-- Australia -->    <polygon points='800,310 870,300 920,320 940,360 920,400 870,420 820,410 790,380 785,345' fill='%239b59b6' opacity='0.8'/>    <!-- Antarctica -->    <rect x='200' y='460' width='660' height='52' fill='%231abc9c' opacity='0.8'/>        <!-- Labels -->    <text x='170' y='140' fill='white' font-family='Arial' font-size='20' font-weight='bold' text-anchor='middle'>North America</text>    <text x='200' y='360' fill='white' font-family='Arial' font-size='20' font-weight='bold' text-anchor='middle'>South America</text>    <text x='500' y='110' fill='white' font-family='Arial' font-size='20' font-weight='bold' text-anchor='middle'>Europe</text>    <text x='500' y='280' fill='white' font-family='Arial' font-size='20' font-weight='bold' text-anchor='middle'>Africa</text>    <text x='730' y='140' fill='white' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle'>Asia</text>    <text x='850' y='380' fill='white' font-family='Arial' font-size='18' font-weight='bold' text-anchor='middle'>Australia</text>    <text x='530' y='490' fill='white' font-family='Arial' font-size='20' font-weight='bold' text-anchor='middle'>Antarctica</text></svg>"
+            alt="Clickable World Map"
+            width="1024"
+            height="512"
+            usemap="#world-map"
+            id="world-img"
+            style="cursor:crosshair;">
+    </div>
+
+    <!--
+        <map> + <area> tags for each continent.
+        Coordinates defined as poly for realistic continent shapes.
+    -->
+    <map name="world-map">
+
+        <!-- North America -->
+        <area
+            shape="poly"
+            coords="95,60, 220,60, 250,80, 245,180, 220,230, 185,270, 145,270, 120,240, 90,200, 70,140, 80,90"
+            href="https://en.wikipedia.org/wiki/North_America"
+            target="_blank"
+            alt="North America"
+            title="North America"
+            onmousemove="showTip(event,'🌎 North America – click for Wikipedia')"
+            onmouseout="hideTip()">
+
+        <!-- South America -->
+        <area
+            shape="poly"
+            coords="160,270, 200,265, 240,290, 260,340, 255,410, 235,450, 200,460, 175,445, 155,400, 145,340, 150,300"
+            href="https://en.wikipedia.org/wiki/South_America"
+            target="_blank"
+            alt="South America"
+            title="South America"
+            onmousemove="showTip(event,'🌎 South America – click for Wikipedia')"
+            onmouseout="hideTip()">
+
+        <!-- Europe -->
+        <area
+            shape="poly"
+            coords="440,55, 530,50, 560,70, 570,110, 540,145, 500,155, 460,145, 430,120, 425,90"
+            href="https://en.wikipedia.org/wiki/Europe"
+            target="_blank"
+            alt="Europe"
+            title="Europe"
+            onmousemove="showTip(event,'🌍 Europe – click for Wikipedia')"
+            onmouseout="hideTip()">
+
+        <!-- Africa -->
+        <area
+            shape="poly"
+            coords="450,160, 520,150, 575,170, 590,220, 590,300, 570,370, 540,410, 500,430, 460,420, 430,380, 420,310, 425,230, 440,185"
+            href="https://en.wikipedia.org/wiki/Africa"
+            target="_blank"
+            alt="Africa"
+            title="Africa"
+            onmousemove="showTip(event,'🌍 Africa – click for Wikipedia')"
+            onmouseout="hideTip()">
+
+        <!-- Asia -->
+        <area
+            shape="poly"
+            coords="570,50, 850,45, 920,70, 940,120, 900,180, 840,210, 780,230, 700,240, 640,220, 590,190, 560,150, 555,90"
+            href="https://en.wikipedia.org/wiki/Asia"
+            target="_blank"
+            alt="Asia"
+            title="Asia"
+            onmousemove="showTip(event,'🌏 Asia – click for Wikipedia')"
+            onmouseout="hideTip()">
+
+        <!-- Australia / Oceania -->
+        <area
+            shape="poly"
+            coords="800,310, 870,300, 920,320, 940,360, 920,400, 870,420, 820,410, 790,380, 785,345"
+            href="https://en.wikipedia.org/wiki/Australia_(continent)"
+            target="_blank"
+            alt="Australia / Oceania"
+            title="Australia / Oceania"
+            onmousemove="showTip(event,'🌏 Australia / Oceania – click for Wikipedia')"
+            onmouseout="hideTip()">
+
+        <!-- Antarctica -->
+        <area
+            shape="rect"
+            coords="200,460, 860,512"
+            href="https://en.wikipedia.org/wiki/Antarctica"
+            target="_blank"
+            alt="Antarctica"
+            title="Antarctica"
+            onmousemove="showTip(event,'🧊 Antarctica – click for Wikipedia')"
+            onmouseout="hideTip()">
+
+    </map>
+
+    <div class="legend">
+        <div class="legend-item"><span class="dot" style="background:#e74c3c"></span>North America</div>
+        <div class="legend-item"><span class="dot" style="background:#e67e22"></span>South America</div>
+        <div class="legend-item"><span class="dot" style="background:#2ecc71"></span>Europe</div>
+        <div class="legend-item"><span class="dot" style="background:#f1c40f"></span>Africa</div>
+        <div class="legend-item"><span class="dot" style="background:#3498db"></span>Asia</div>
+        <div class="legend-item"><span class="dot" style="background:#9b59b6"></span>Australia</div>
+        <div class="legend-item"><span class="dot" style="background:#1abc9c"></span>Antarctica</div>
+    </div>
+
+    <script>
+        const tip = document.getElementById('tooltip');
+        function showTip(e, text) {
+            tip.textContent = text;
+            tip.style.display = 'block';
+            tip.style.left = (e.clientX + 14) + 'px';
+            tip.style.top  = (e.clientY - 32) + 'px';
+        }
+        function hideTip() { tip.style.display = 'none'; }
+    </script>
+</body>
+</html>
